@@ -1,10 +1,19 @@
-export const TransactionsHeader: React.FC = () => {
+import { format } from 'date-fns'
+import PtBr from 'date-fns/locale/pt-BR'
+
+interface ITransactionsHeaderProps {
+  startDate: Date
+}
+
+export const TransactionsHeader: React.FC<ITransactionsHeaderProps> = ({
+  startDate,
+}) => {
   return (
     <header className="flex justify-between border-b-4 border-b-orange-400 pb-2 mt-8">
       <h1 className="flex flex-col justify-end">
         <small className="uppercase text-lg font-bold">Transações</small>
-        <strong className="font-black italic text-5xl text-yellow-500">
-          julho 2022
+        <strong className="font-black italic text-4xl text-yellow-500">
+          {format(startDate, 'MMMM/yyyy', { locale: PtBr })}
         </strong>
       </h1>
       <div className="flex-1 flex justify-end gap-2">
