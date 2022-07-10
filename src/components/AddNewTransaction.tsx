@@ -1,6 +1,6 @@
-import { PlusCircle } from 'phosphor-react'
+import { PlusCircle } from "phosphor-react";
 
-import InputMask from 'react-input-mask'
+import InputMask from "react-input-mask";
 
 export const AddNewTransaction: React.FC = () => {
   return (
@@ -57,5 +57,5 @@ export const AddNewTransaction: React.FC = () => {
         Salvar
       </button>
     </form>
-  )
-}
+  );
+};
