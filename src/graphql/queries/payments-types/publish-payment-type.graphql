@@ -1,0 +1,8 @@
+mutation PublishPaymentType($id: ID) {
+  publishPaymentType(where: { id: $id }, to: PUBLISHED) {
+    id
+    name
+    slug
+    stage
+  }
+}

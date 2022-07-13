@@ -1,0 +1,5 @@
+mutation PublishCategories {
+  publishManyCategories(to: PUBLISHED) {
+    count    
+  }
+}

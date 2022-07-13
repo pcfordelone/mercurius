@@ -1,0 +1,5 @@
+mutation DeleteTransactions($ids: [ID!]) {
+  deleteManyTransactions(where: { id_in: $ids }) {
+    count
+  }
+}

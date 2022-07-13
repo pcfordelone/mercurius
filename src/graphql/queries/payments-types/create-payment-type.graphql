@@ -1,0 +1,8 @@
+mutation CreatePaymentType($name: String!, $slug: String!) {
+  createPaymentType(data: { name: $name, isActive: true, slug: $slug }) {
+    name
+    id
+    isActive
+    slug
+  }
+}

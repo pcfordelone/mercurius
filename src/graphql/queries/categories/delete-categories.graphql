@@ -1,0 +1,5 @@
+mutation DeleteCategories($ids: [ID!]) {
+  deleteManyCategories(where: {id_in: $ids}) {
+    count
+  }
+}

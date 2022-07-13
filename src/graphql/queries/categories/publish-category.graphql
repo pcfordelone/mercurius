@@ -1,0 +1,8 @@
+mutation PublishCategory($id: ID) {
+  publishCategory(where: {id: $id}, to: PUBLISHED) {
+    id
+    name
+    slug
+    stage
+  }
+}

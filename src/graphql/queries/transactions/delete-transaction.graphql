@@ -1,0 +1,6 @@
+mutation DeleteTransaction($id: ID) {
+  deleteTransaction(where: { id: $id }) {
+    id
+    place
+  }
+}

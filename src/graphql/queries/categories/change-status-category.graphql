@@ -1,0 +1,8 @@
+mutation ChangeStatusCategory($id: ID!, $isActive: Boolean!) {
+  updateCategory(data: {isActive: false}, where: {id: ""}) {
+    id
+    name
+    isActive
+    slug
+  }
+}

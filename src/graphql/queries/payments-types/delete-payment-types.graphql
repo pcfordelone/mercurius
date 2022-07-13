@@ -1,0 +1,5 @@
+mutation DeletePaymentTypes($ids: [ID!]) {
+  deleteManyPaymentTypes(where: { id_in: $ids }) {
+    count
+  }
+}

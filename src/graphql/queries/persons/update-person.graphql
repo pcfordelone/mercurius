@@ -1,0 +1,26 @@
+mutation UpdatePerson(
+  $id: ID!
+  $name: String!
+  $slug: String!
+  $nickname: String!
+  $email: String!
+  $phone: String!
+  $password: String!
+) {
+  updatePerson(
+    data: {
+      name: $name
+      nickname: $nickname
+      slug: $slug
+      email: $email
+      phone: $phone
+      password: $password
+    }
+    where: { id: $id }
+  ) {
+    id
+    name
+    slug
+    nickname
+  }
+}

@@ -1,0 +1,9 @@
+query ListCategories {
+  categories(orderBy: name_ASC, first: 100) {
+    name
+    isActive
+    id
+    slug
+    stage    
+  }
+}

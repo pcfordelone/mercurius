@@ -1,0 +1,8 @@
+query ListPersonsActives($first: Int = 100) {
+  people(orderBy: name_ASC, first: $first) {
+    id
+    name
+    slug
+    nickname
+  }
+}

@@ -1,0 +1,24 @@
+query ListTransactionsByDate($startDate: DateTime!, $endDate: DateTime!) {
+  transactions(
+    orderBy: date_ASC
+    where: { date_gte: $startDate, AND: { date_lte: $endDate } }
+  ) {
+    id
+    place
+    value
+    date
+    transactionType
+    paymentType {
+      id
+      name
+    }
+    category {
+      id
+      name
+    }
+    person {
+      id
+      name
+    }
+  }
+}

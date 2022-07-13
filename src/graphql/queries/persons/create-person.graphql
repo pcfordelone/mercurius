@@ -1,0 +1,24 @@
+mutation CreatePerson(
+  $name: String!
+  $slug: String!
+  $nickname: String!
+  $email: String!
+  $phone: String!
+  $password: String!
+) {
+  createPerson(
+    data: {
+      name: $name
+      nickname: $nickname
+      slug: $slug
+      email: $email
+      phone: $phone
+      password: $password
+    }
+  ) {
+    id
+    name
+    slug
+    nickname
+  }
+}

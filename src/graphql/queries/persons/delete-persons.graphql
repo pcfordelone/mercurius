@@ -1,0 +1,5 @@
+mutation DeletePersons($ids: [ID!]) {
+  deleteManyPeople(where: { id_in: $ids }) {
+    count
+  }
+}

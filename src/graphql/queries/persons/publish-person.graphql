@@ -1,0 +1,8 @@
+mutation PublishPerson($id: ID) {
+  publishPerson(where: { id: $id }, to: PUBLISHED) {
+    id
+    name
+    slug
+    stage
+  }
+}

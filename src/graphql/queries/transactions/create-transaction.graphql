@@ -1,0 +1,24 @@
+mutation CreateTransaction(
+  $place: String!
+  $value: Float!
+  $date: DateTime!
+  $transactionType: TransactionType!
+  $payment_id: ID
+  $person_id: ID
+  $category_id: ID
+) {
+  createTransaction(
+    data: {
+      place: $place
+      value: $value
+      date: $date
+      transactionType: $transactionType
+      paymentType: { connect: { id: $payment_id } }
+      person: { connect: { id: $person_id } }
+      category: { connect: { id: $category_id } }
+    }
+  ) {
+    id
+    place
+  }
+}

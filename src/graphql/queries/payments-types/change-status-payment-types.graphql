@@ -1,0 +1,8 @@
+mutation ChangeStatusPaymentType($id: ID!, $isActive: Boolean!) {
+  updatePaymentType(data: { isActive: false }, where: { id: "" }) {
+    id
+    name
+    isActive
+    slug
+  }
+}

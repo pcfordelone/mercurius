@@ -1,0 +1,6 @@
+mutation DeletePaymentType($id: ID) {
+  deletePaymentType(where: { id: $id }) {
+    id
+    name
+  }
+}
