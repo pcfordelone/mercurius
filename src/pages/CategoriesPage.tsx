@@ -1,4 +1,5 @@
-import { Categories } from "../components/Categories";
+import { Categories } from "../components/Categories/Categories";
+import { Footer } from "../components/Footer";
 import { Header } from "../components/Header";
 
 export const CategoriesPage: React.FC = () => {
@@ -6,6 +7,7 @@ export const CategoriesPage: React.FC = () => {
     <div className="flex flex-col min-h-screen">
       <Header />
       <Categories />
+      <Footer />
     </div>
   );
 };
