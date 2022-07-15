@@ -1,14 +1,20 @@
+import { useAuth0 } from "@auth0/auth0-react";
 import { House, SignOut } from "phosphor-react";
 import { Link } from "react-router-dom";
 import LogoImg from "../assets/logo.svg";
 
 export const Header: React.FC = () => {
+  const { logout } = useAuth0();
+
   return (
     <main className="z-10 fixed w-full bg-gray-800 border-b-8 border-orange-500">
       <div className="max-w-6xl h-48 py-4 m-auto flex justify-between">
         <img className="max-h-max" src={LogoImg} alt="Mercurius Logo" />
         <div className="flex flex-col items-end justify-between">
-          <button className="py-1 px-4 border-2 rounded-xl border-gray-500 text-yellow-500 transition-colors duration-300 hover:border-orange-400">
+          <button
+            onClick={() => logout()}
+            className="py-1 px-4 border-2 rounded-xl border-gray-500 text-yellow-500 transition-colors duration-300 hover:border-orange-400"
+          >
             <SignOut size={36} />
           </button>
           <nav>
