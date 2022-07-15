@@ -1,6 +1,6 @@
 import { Footer } from "../components/Footer";
 import { Header } from "../components/Header";
-import { Persons } from "../components/Persons";
+import { Persons } from "../components/Persons/Persons";
 
 export const PersonsPage: React.FC = () => {
   return (

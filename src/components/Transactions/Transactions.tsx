@@ -34,6 +34,7 @@ import { startOfMonth } from "date-fns/esm";
 import { notify } from "../../utils/notify";
 
 import { EditTransaction, IEditTransactionFormData } from "./EditTransaction";
+import { scrollToTop } from "../../utils/scrollToTop";
 
 export const Transactions: React.FC = () => {
   const [startDate, setStartDate] = useState(new Date());
@@ -257,9 +258,9 @@ export const Transactions: React.FC = () => {
   const handleEditCategoryForm = async (transaction: Transaction) => {
     await handleDismissEditCategoryForm();
 
-    console.log(transaction);
     setEditTransaction(transaction);
     setIsEditFormActive(true);
+    scrollToTop();
   };
 
   const handleDismissEditCategoryForm = () => {

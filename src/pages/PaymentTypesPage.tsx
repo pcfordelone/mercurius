@@ -1,5 +1,5 @@
 import { Header } from "../components/Header";
-import { PaymentTypes } from "../components/PaymentTypes";
+import { PaymentTypes } from "../components/PaymentTypes/PaymentTypes";
 import { Footer } from "../components/Footer";
 
 export const PaymentTypesPage: React.FC = () => {

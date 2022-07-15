@@ -95,7 +95,7 @@ export const EditTransaction: React.FC<IEditTransactionProps> = ({
                 category: e.target.value,
               })
             }
-            value={transaction?.category?.id}
+            defaultValue={transaction?.category?.id}
           >
             <option disabled={true} value="">
               Categoria
@@ -109,7 +109,7 @@ export const EditTransaction: React.FC<IEditTransactionProps> = ({
           <select
             required
             className="flex-1 bg-gray-200 border-0 text-gray-800 rounded-lg px-4"
-            value={transaction?.paymentType?.id}
+            defaultValue={transaction?.paymentType?.id}
             onChange={(e: ChangeEvent<HTMLSelectElement>) =>
               setFormData({
                 ...formData,
@@ -129,7 +129,7 @@ export const EditTransaction: React.FC<IEditTransactionProps> = ({
           <select
             required
             className="flex-1 bg-gray-200 border-0 text-gray-800 rounded-lg px-4 placeholder:text-gray-600"
-            value={transaction?.person?.id}
+            defaultValue={transaction?.person?.id}
             onChange={(e: ChangeEvent<HTMLSelectElement>) =>
               setFormData({
                 ...formData,
@@ -164,7 +164,7 @@ export const EditTransaction: React.FC<IEditTransactionProps> = ({
           <select
             required
             className="w-60 bg-gray-200 border-0 text-gray-800 rounded-lg px-4 placeholder:text-gray-600"
-            value={transaction?.transactionType}
+            defaultValue={transaction?.transactionType}
             onChange={(e: ChangeEvent<HTMLSelectElement>) =>
               setFormData({
                 ...formData,

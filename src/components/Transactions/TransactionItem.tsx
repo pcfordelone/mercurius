@@ -40,7 +40,7 @@ export const TransactionItem: React.FC<ITransactionItemProps> = ({
       </th>
       <td className="px-6 py-6 text-center">{transaction.category?.name}</td>
       <td className="px-6 py-6 text-center">{transaction.paymentType?.name}</td>
-      <td className="px-6 py-6 text-center">{transaction.person?.name}</td>
+      <td className="px-6 py-6 text-center">{transaction.person?.nickname}</td>
       <td className="px-6 py-6 text-center">
         {format(new Date(transaction.date), "dd/MM/yyyy")}
       </td>

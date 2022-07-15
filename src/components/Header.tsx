@@ -13,20 +13,26 @@ export const Header: React.FC = () => {
           </button>
           <nav>
             <ul className="flex items-center gap-2 font-black italic text-lg">
-              <li className="py-1 px-4 border-2 rounded-xl border-gray-500 text-yellow-500 transition-colors duration-300 hover:border-orange-400 active:border-gray-100">
-                <Link to="/">
+              <Link to="/">
+                <li className="pointer-events-auto py-1 px-4 border-2 rounded-xl border-gray-500 text-yellow-500 transition-colors duration-300 hover:border-orange-400 active:border-gray-100">
                   <House size={36} />
-                </Link>
-              </li>
-              <li className="py-2 px-4 border-2 rounded-xl border-gray-500 text-yellow-500 transition-colors duration-300 hover:border-orange-400">
-                <Link to="/categorias">Categorias</Link>
-              </li>
-              <li className="py-2 px-4 border-2 rounded-xl border-gray-500 text-yellow-500 transition-colors duration-300 hover:border-orange-400">
-                <Link to="/metodos-de-pagamento">Meios de Pagamento</Link>
-              </li>
-              <li className="py-2 px-4 border-2 rounded-xl border-gray-500 text-yellow-500 transition-colors duration-300 hover:border-orange-400">
-                <Link to="/familiares">Familiares</Link>
-              </li>
+                </li>
+              </Link>
+              <Link to="/categorias">
+                <li className="py-2 px-4 border-2 rounded-xl border-gray-500 text-yellow-500 transition-colors duration-300 hover:border-orange-400">
+                  Categorias
+                </li>
+              </Link>
+              <Link to="/metodos-de-pagamento">
+                <li className="py-2 px-4 border-2 rounded-xl border-gray-500 text-yellow-500 transition-colors duration-300 hover:border-orange-400">
+                  Meios de Pagamento
+                </li>
+              </Link>
+              <Link to="/familiares">
+                <li className="py-2 px-4 border-2 rounded-xl border-gray-500 text-yellow-500 transition-colors duration-300 hover:border-orange-400">
+                  Familiares
+                </li>
+              </Link>
             </ul>
           </nav>
         </div>

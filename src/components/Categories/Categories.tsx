@@ -1,17 +1,17 @@
+import { FormEvent, useRef, useState } from "react";
+
 import BackgroundImage from "../../assets/home-background.jpg";
 import LoadingImg from "../../assets/loading.svg";
-
 import { FilePlus, CaretDown, CaretRight, Trash } from "phosphor-react";
-import { FormEvent, useRef, useState } from "react";
 
 import {
   Category,
   useListCategoriesQuery,
   useDeleteCategoryMutation,
-} from "../../graphql/generated";
-import {
   useCreateCategoryMutation,
   usePublishCategoryMutation,
+  useUpdateCategoryMutation,
+  useDeleteCategoriesMutation,
 } from "../../graphql/generated";
 
 import { CategoryItem } from "./CategoryItem";
@@ -20,10 +20,7 @@ import { EditCategoryForm } from "./EditCategory";
 
 import { slugify } from "../../utils/slugify";
 import { notify } from "../../utils/notify";
-import {
-  useUpdateCategoryMutation,
-  useDeleteCategoriesMutation,
-} from "../../graphql/generated";
+import { scrollToTop } from "../../utils/scrollToTop";
 
 export const Categories: React.FC = () => {
   const [isAddFormActive, setIsAddFormActive] = useState(false);
@@ -59,7 +56,7 @@ export const Categories: React.FC = () => {
   const handleDeleteCategory = (id: string) => {
     if (window.confirm("Realmente deseja apagar?")) {
       setIsLoading(true);
-      handleScrollToStart();
+      scrollToTop();
 
       deleteCategory({
         variables: {
@@ -82,7 +79,7 @@ export const Categories: React.FC = () => {
   const handleDeleteCategories = () => {
     if (window.confirm("Realmente deseja as categorias selecionadas?")) {
       setIsLoading(true);
-      handleScrollToStart();
+      scrollToTop();
 
       deleteCategories({
         variables: {
@@ -196,6 +193,7 @@ export const Categories: React.FC = () => {
 
     setEditCategory(category);
     setIsEditFormActive(true);
+    scrollToTop();
   };
 
   const handleDismissEditCategoryForm = () => {
