@@ -4,5 +4,8 @@ query ListPersonsActives($first: Int = 100) {
     name
     slug
     nickname
+    email
+    phone
+    stage
   }
 }

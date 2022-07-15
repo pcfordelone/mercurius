@@ -5,7 +5,6 @@ mutation UpdatePerson(
   $nickname: String!
   $email: String!
   $phone: String!
-  $password: String!
 ) {
   updatePerson(
     data: {
@@ -14,7 +13,6 @@ mutation UpdatePerson(
       slug: $slug
       email: $email
       phone: $phone
-      password: $password
     }
     where: { id: $id }
   ) {

@@ -5873,7 +5873,7 @@ export type ListPaymentTypesActivesQueryVariables = Exact<{
 }>;
 
 
-export type ListPaymentTypesActivesQuery = { __typename?: 'Query', paymentTypes: Array<{ __typename?: 'PaymentType', id: string, name: string, slug: string }> };
+export type ListPaymentTypesActivesQuery = { __typename?: 'Query', paymentTypes: Array<{ __typename?: 'PaymentType', id: string, name: string, slug: string, isActive?: boolean | null, stage: Stage }> };
 
 export type PublishPaymentTypeMutationVariables = Exact<{
   id?: InputMaybe<Scalars['ID']>;
@@ -5923,7 +5923,7 @@ export type ListPersonsActivesQueryVariables = Exact<{
 }>;
 
 
-export type ListPersonsActivesQuery = { __typename?: 'Query', people: Array<{ __typename?: 'Person', id: string, name: string, slug?: string | null, nickname: string }> };
+export type ListPersonsActivesQuery = { __typename?: 'Query', people: Array<{ __typename?: 'Person', id: string, name: string, slug?: string | null, nickname: string, email: string, phone?: string | null, stage: Stage }> };
 
 export type PublishPersonMutationVariables = Exact<{
   id?: InputMaybe<Scalars['ID']>;
@@ -5939,7 +5939,6 @@ export type UpdatePersonMutationVariables = Exact<{
   nickname: Scalars['String'];
   email: Scalars['String'];
   phone: Scalars['String'];
-  password: Scalars['String'];
 }>;
 
 
@@ -5978,7 +5977,7 @@ export type ListTransactionsByDateQueryVariables = Exact<{
 }>;
 
 
-export type ListTransactionsByDateQuery = { __typename?: 'Query', transactions: Array<{ __typename?: 'Transaction', id: string, place: string, value: number, date: any, transactionType: TransactionType, paymentType?: { __typename?: 'PaymentType', id: string, name: string } | null, category?: { __typename?: 'Category', id: string, name: string } | null, person?: { __typename?: 'Person', id: string, name: string } | null }> };
+export type ListTransactionsByDateQuery = { __typename?: 'Query', transactions: Array<{ __typename?: 'Transaction', id: string, place: string, value: number, date: any, transactionType: TransactionType, paymentType?: { __typename?: 'PaymentType', id: string, name: string } | null, category?: { __typename?: 'Category', id: string, name: string } | null, person?: { __typename?: 'Person', id: string, name: string, nickname: string } | null }> };
 
 export type PublishTransactionMutationVariables = Exact<{
   id?: InputMaybe<Scalars['ID']>;
@@ -6434,10 +6433,12 @@ export type DeletePaymentTypesMutationResult = Apollo.MutationResult<DeletePayme
 export type DeletePaymentTypesMutationOptions = Apollo.BaseMutationOptions<DeletePaymentTypesMutation, DeletePaymentTypesMutationVariables>;
 export const ListPaymentTypesActivesDocument = gql`
     query ListPaymentTypesActives($first: Int = 100) {
-  paymentTypes(orderBy: name_ASC, where: {isActive: true}, first: $first) {
+  paymentTypes(orderBy: name_ASC, first: $first) {
     id
     name
     slug
+    isActive
+    stage
   }
 }
     `;
@@ -6664,6 +6665,9 @@ export const ListPersonsActivesDocument = gql`
     name
     slug
     nickname
+    email
+    phone
+    stage
   }
 }
     `;
@@ -6732,9 +6736,9 @@ export type PublishPersonMutationHookResult = ReturnType<typeof usePublishPerson
 export type PublishPersonMutationResult = Apollo.MutationResult<PublishPersonMutation>;
 export type PublishPersonMutationOptions = Apollo.BaseMutationOptions<PublishPersonMutation, PublishPersonMutationVariables>;
 export const UpdatePersonDocument = gql`
-    mutation UpdatePerson($id: ID!, $name: String!, $slug: String!, $nickname: String!, $email: String!, $phone: String!, $password: String!) {
+    mutation UpdatePerson($id: ID!, $name: String!, $slug: String!, $nickname: String!, $email: String!, $phone: String!) {
   updatePerson(
-    data: {name: $name, nickname: $nickname, slug: $slug, email: $email, phone: $phone, password: $password}
+    data: {name: $name, nickname: $nickname, slug: $slug, email: $email, phone: $phone}
     where: {id: $id}
   ) {
     id
@@ -6765,7 +6769,6 @@ export type UpdatePersonMutationFn = Apollo.MutationFunction<UpdatePersonMutatio
  *      nickname: // value for 'nickname'
  *      email: // value for 'email'
  *      phone: // value for 'phone'
- *      password: // value for 'password'
  *   },
  * });
  */
@@ -6907,6 +6910,7 @@ export const ListTransactionsByDateDocument = gql`
     person {
       id
       name
+      nickname
     }
   }
 }

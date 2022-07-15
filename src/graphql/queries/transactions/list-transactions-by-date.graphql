@@ -19,6 +19,7 @@ query ListTransactionsByDate($startDate: DateTime!, $endDate: DateTime!) {
     person {
       id
       name
+      nickname
     }
   }
 }

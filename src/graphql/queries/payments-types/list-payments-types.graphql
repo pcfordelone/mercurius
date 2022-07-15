@@ -1,7 +1,9 @@
 query ListPaymentTypesActives($first: Int = 100) {
-  paymentTypes(orderBy: name_ASC, where: { isActive: true }, first: $first) {
+  paymentTypes(orderBy: name_ASC, first: $first) {
     id
     name
     slug
+    isActive
+    stage
   }
 }
