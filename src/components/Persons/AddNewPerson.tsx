@@ -1,6 +1,7 @@
 import { PlusCircle } from "phosphor-react";
-import { ChangeEvent, FormEvent, useState } from "react";
-import { IAddNewPersonFormData } from "./interfaces";
+import { ChangeEvent, useState } from "react";
+import { IAddNewPersonFormData } from "../../contexts/PersonContext/interfaces";
+
 import { UsePersonContext } from "../../contexts/PersonContext/usePerson";
 
 export const AddNewPerson: React.FC = () => {
