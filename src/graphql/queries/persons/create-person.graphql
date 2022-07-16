@@ -4,7 +4,6 @@ mutation CreatePerson(
   $nickname: String!
   $email: String!
   $phone: String!
-  $password: String!
 ) {
   createPerson(
     data: {
@@ -13,7 +12,6 @@ mutation CreatePerson(
       slug: $slug
       email: $email
       phone: $phone
-      password: $password
     }
   ) {
     id

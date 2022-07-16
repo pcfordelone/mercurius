@@ -2683,7 +2683,7 @@ export type Person = Node & {
   id: Scalars['ID'];
   name: Scalars['String'];
   nickname: Scalars['String'];
-  password: Scalars['String'];
+  password?: Maybe<Scalars['String']>;
   phone?: Maybe<Scalars['String']>;
   /** The time the document was published. Null on documents in draft stage. */
   publishedAt?: Maybe<Scalars['DateTime']>;
@@ -2778,7 +2778,7 @@ export type PersonCreateInput = {
   email: Scalars['String'];
   name: Scalars['String'];
   nickname: Scalars['String'];
-  password: Scalars['String'];
+  password?: InputMaybe<Scalars['String']>;
   phone?: InputMaybe<Scalars['String']>;
   slug?: InputMaybe<Scalars['String']>;
   transactions?: InputMaybe<PersonTransactionsCreateManyInlineInput>;
@@ -5898,7 +5898,6 @@ export type CreatePersonMutationVariables = Exact<{
   nickname: Scalars['String'];
   email: Scalars['String'];
   phone: Scalars['String'];
-  password: Scalars['String'];
 }>;
 
 
@@ -6549,9 +6548,9 @@ export type UpdatePaymentTypeMutationHookResult = ReturnType<typeof useUpdatePay
 export type UpdatePaymentTypeMutationResult = Apollo.MutationResult<UpdatePaymentTypeMutation>;
 export type UpdatePaymentTypeMutationOptions = Apollo.BaseMutationOptions<UpdatePaymentTypeMutation, UpdatePaymentTypeMutationVariables>;
 export const CreatePersonDocument = gql`
-    mutation CreatePerson($name: String!, $slug: String!, $nickname: String!, $email: String!, $phone: String!, $password: String!) {
+    mutation CreatePerson($name: String!, $slug: String!, $nickname: String!, $email: String!, $phone: String!) {
   createPerson(
-    data: {name: $name, nickname: $nickname, slug: $slug, email: $email, phone: $phone, password: $password}
+    data: {name: $name, nickname: $nickname, slug: $slug, email: $email, phone: $phone}
   ) {
     id
     name
@@ -6580,7 +6579,6 @@ export type CreatePersonMutationFn = Apollo.MutationFunction<CreatePersonMutatio
  *      nickname: // value for 'nickname'
  *      email: // value for 'email'
  *      phone: // value for 'phone'
- *      password: // value for 'password'
  *   },
  * });
  */
