@@ -1,19 +1,15 @@
 import { PlusCircle } from "phosphor-react";
 import { ChangeEvent, FormEvent, useState } from "react";
+import { usePaymentTypes } from "../../hooks/usePaymentTypes";
+import { usePaymentTypeContext } from "../../contexts/PaymentContext/usePaymentTypes";
 
-interface IAddNewPaymentProps {
-  handleFormSubmit: (e: FormEvent<HTMLFormElement>, name: string) => void;
-  isLoading: boolean;
-}
-export const AddNewPaymentType: React.FC<IAddNewPaymentProps> = ({
-  handleFormSubmit,
-  isLoading,
-}: IAddNewPaymentProps) => {
+export const AddNewPaymentType: React.FC = () => {
   const [name, setName] = useState("");
+  const { isLoading, handleAddFormSubmit } = usePaymentTypeContext();
 
   return (
     <form
-      onSubmit={(e) => handleFormSubmit(e, name)}
+      onSubmit={(e) => handleAddFormSubmit(e, name)}
       className="flex gap-2 text-sm mb-4 mt-2"
     >
       <input

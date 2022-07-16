@@ -10,66 +10,53 @@ import {
   Person,
   Transaction,
 } from "../../graphql/generated";
+import { IEditTransactionFormData } from "../../contexts/TransactionContext/interfaces";
+import { useTransactionContext } from "../../contexts/TransactionContext/useTransaction";
 
 interface IEditTransactionProps {
   paymentTypes: PaymentType[];
   categories: Category[];
   persons: Person[];
-  isLoading: boolean;
-  transaction?: Transaction | undefined;
-  handleFormSubmit: (
-    e: FormEvent<HTMLFormElement>,
-    data: IEditTransactionFormData
-  ) => void;
-  dismissForm: () => void;
-}
-
-export interface IEditTransactionFormData {
-  id: string;
-  place: string;
-  category: string;
-  paymentType: string;
-  person: string;
-  date: string;
-  transactionType: string;
-  value: string;
 }
 
 export const EditTransaction: React.FC<IEditTransactionProps> = ({
-  handleFormSubmit,
   paymentTypes,
   categories,
   persons,
-  isLoading,
-  transaction,
-  dismissForm,
 }: IEditTransactionProps) => {
+  const {
+    isLoading,
+    editTransaction,
+    submitEditTransactionForm,
+    handleDismissEditCategoryForm,
+  } = useTransactionContext();
+
   const [formData, setFormData] = useState<IEditTransactionFormData>({
-    id: transaction?.id || "",
-    place: transaction?.place || "",
-    category: transaction?.category?.id || "",
-    paymentType: transaction?.paymentType?.id || "",
-    person: transaction?.person?.id || "",
-    date: format(new Date(transaction?.date), "dd/MM/yyyy") || "",
-    transactionType: transaction?.transactionType || "",
+    id: editTransaction?.id || "",
+    place: editTransaction?.place || "",
+    category: editTransaction?.category?.id || "",
+    paymentType: editTransaction?.paymentType?.id || "",
+    person: editTransaction?.person?.id || "",
+    date: format(new Date(editTransaction?.date), "dd/MM/yyyy") || "",
+    transactionType: editTransaction?.transactionType || "",
     value:
       Intl.NumberFormat("pt-BR", {
         style: "decimal",
-      }).format(transaction?.value || 0) || "",
+      }).format(editTransaction?.value || 0) || "",
   });
 
   return (
     <div className="p-4 rounded-2xl border border-gray-500 mt-4 relative">
       <strong className="text-lg text-orange-300">Editar Transação</strong>
       <button
-        onClick={dismissForm}
+        onClick={handleDismissEditCategoryForm}
         className="text-gray-600 absolute top-2 right-2 transition-colors duration-300 hover:text-gray-400"
       >
         <XCircle size={24} />
       </button>
       <form
         onSubmit={(e: FormEvent<HTMLFormElement>) =>
-          handleFormSubmit(e, formData)
+          submitEditTransactionForm(e, formData)
         }
         className="flex flex-col items-center gap-2 mt-2"
       >
@@ -95,7 +82,7 @@ export const EditTransaction: React.FC<IEditTransactionProps> = ({
                 category: e.target.value,
               })
             }
-            defaultValue={transaction?.category?.id}
+            defaultValue={editTransaction?.category?.id}
           >
             <option disabled={true} value="">
               Categoria
@@ -109,7 +96,7 @@ export const EditTransaction: React.FC<IEditTransactionProps> = ({
           <select
             required
             className="flex-1 bg-gray-200 border-0 text-gray-800 rounded-lg px-4"
-            defaultValue={transaction?.paymentType?.id}
+            defaultValue={editTransaction?.paymentType?.id}
             onChange={(e: ChangeEvent<HTMLSelectElement>) =>
               setFormData({
                 ...formData,
@@ -129,7 +116,7 @@ export const EditTransaction: React.FC<IEditTransactionProps> = ({
           <select
             required
             className="flex-1 bg-gray-200 border-0 text-gray-800 rounded-lg px-4 placeholder:text-gray-600"
-            defaultValue={transaction?.person?.id}
+            defaultValue={editTransaction?.person?.id}
             onChange={(e: ChangeEvent<HTMLSelectElement>) =>
               setFormData({
                 ...formData,
@@ -164,7 +151,7 @@ export const EditTransaction: React.FC<IEditTransactionProps> = ({
           <select
             required
             className="w-60 bg-gray-200 border-0 text-gray-800 rounded-lg px-4 placeholder:text-gray-600"
-            defaultValue={transaction?.transactionType}
+            defaultValue={editTransaction?.transactionType}
             onChange={(e: ChangeEvent<HTMLSelectElement>) =>
               setFormData({
                 ...formData,

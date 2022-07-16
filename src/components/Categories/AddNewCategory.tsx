@@ -1,19 +1,20 @@
 import { PlusCircle } from "phosphor-react";
-import { ChangeEvent, FormEvent, useState } from "react";
+import { ChangeEvent, FormEvent, useState, useContext } from "react";
+import { useCategories } from "../../hooks/useCategories";
+import { CategoryContext } from "../../contexts/CategoryContext";
 
 interface IAddNewCategoryProps {
   handleFormSubmit: (e: FormEvent<HTMLFormElement>, name: string) => void;
   isLoading: boolean;
 }
-export const AddNewCategory: React.FC<IAddNewCategoryProps> = ({
-  handleFormSubmit,
-  isLoading,
-}: IAddNewCategoryProps) => {
+export const AddNewCategory: React.FC = () => {
   const [name, setName] = useState("");
+
+  const { handleAddFormSubmit, isLoading } = useContext(CategoryContext);
 
   return (
     <form
-      onSubmit={(e) => handleFormSubmit(e, name)}
+      onSubmit={(e) => handleAddFormSubmit(e, name)}
       className="flex gap-2 text-sm mb-4 mt-2"
     >
       <input

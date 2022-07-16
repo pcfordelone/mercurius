@@ -1,23 +1,15 @@
 import { PlusCircle, XCircle } from "phosphor-react";
 import { ChangeEvent, FormEvent, useState } from "react";
 import { Person } from "../../graphql/generated";
-import { IEditPersonFormData } from "./interfaces/index";
+import { UsePersonContext } from "../../contexts/PersonContext/usePerson";
+import { IEditPersonFormData } from "../../contexts/PersonContext/interfaces";
 
 interface IEditPersonProps {
   person?: Person | undefined;
-  dismissForm: () => void;
-  isLoading: boolean;
-  handleFormSubmit: (
-    e: FormEvent<HTMLFormElement>,
-    id: string,
-    formData: IEditPersonFormData
-  ) => void;
 }
+
 export const EditPersonForm: React.FC<IEditPersonProps> = ({
   person,
-  dismissForm,
-  handleFormSubmit,
-  isLoading,
 }: IEditPersonProps) => {
   const [formData, setFormData] = useState<IEditPersonFormData>({
     name: person?.name || "",
@@ -26,12 +18,15 @@ export const EditPersonForm: React.FC<IEditPersonProps> = ({
     phone: person?.phone || "",
   });
 
+  const { isLoading, handleDismissEditPersonForm, handleEditFormSubmit } =
+    UsePersonContext();
+
   return (
     <div className="p-4 rounded-2xl border border-gray-500 mt-4 relative">
       <strong className="text-lg text-orange-300">Editar Categoria</strong>
       <form
         onSubmit={(e: FormEvent<HTMLFormElement>) =>
-          handleFormSubmit(e, person?.id as string, formData)
+          handleEditFormSubmit(e, person?.id as string, formData)
         }
         className="flex gap-2 text-sm mb-4 mt-2"
       >
@@ -93,7 +88,7 @@ export const EditPersonForm: React.FC<IEditPersonProps> = ({
         </button>
       </form>
       <button
-        onClick={dismissForm}
+        onClick={handleDismissEditPersonForm}
         className="text-gray-600 absolute top-2 right-2 transition-colors duration-300 hover:text-gray-400"
       >
         <XCircle size={24} />

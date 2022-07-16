@@ -3,34 +3,19 @@ import { PlusCircle } from "phosphor-react";
 import InputMask from "react-input-mask";
 import { Category, PaymentType, Person } from "../../graphql/generated";
 import { useState, ChangeEvent, FormEvent } from "react";
+import { INewTransactionFormData } from "../../contexts/TransactionContext/interfaces";
+import { useTransactionContext } from "../../contexts/TransactionContext/useTransaction";
 
 interface IAddNewTransactionProps {
   paymentTypes: PaymentType[];
   categories: Category[];
   persons: Person[];
-  handleFormSubmit: (
-    e: FormEvent<HTMLFormElement>,
-    data: INewTransactionFormData
-  ) => void;
-  isLoading: boolean;
-}
-
-export interface INewTransactionFormData {
-  place: string;
-  category: string;
-  paymentType: string;
-  person: string;
-  date: string;
-  transactionType: string;
-  value: string;
 }
 
 export const AddNewTransaction: React.FC<IAddNewTransactionProps> = ({
-  handleFormSubmit,
   paymentTypes,
   categories,
   persons,
-  isLoading,
 }: IAddNewTransactionProps) => {
   const [formData, setFormData] = useState<INewTransactionFormData>({
     place: "",
@@ -42,10 +27,12 @@ export const AddNewTransaction: React.FC<IAddNewTransactionProps> = ({
     value: "",
   });
 
+  const { isLoading, submitAddTransactionForm } = useTransactionContext();
+
   return (
     <form
       onSubmit={(e: FormEvent<HTMLFormElement>) =>
-        handleFormSubmit(e, formData)
+        submitAddTransactionForm(e, formData)
       }
       className="flex flex-col items-center gap-2 mt-2 p-4 border border-gray-700 rounded-xl"
     >
@@ -146,8 +133,8 @@ export const AddNewTransaction: React.FC<IAddNewTransactionProps> = ({
             })
           }
         >
-          <option value="credit">Crédito</option>
-          <option value="debit">Débito</option>
+          <option value="credit">Entrada</option>
+          <option value="debit">Saída</option>
         </select>
         <input
           type="text"

@@ -1,22 +1,22 @@
 import { format } from "date-fns";
 import { PencilSimpleLine, Trash } from "phosphor-react";
 import { Transaction } from "../../graphql/generated";
+import { useTransactionContext } from "../../contexts/TransactionContext/useTransaction";
 
 interface ITransactionItemProps {
   transaction: Transaction;
-  deleteTransaction: (id: string) => void;
-  isLoading: boolean;
-  selectCategory: (id: string, unselect?: boolean) => void;
-  editCategoryForm: (transaction: Transaction) => void;
 }
 
 export const TransactionItem: React.FC<ITransactionItemProps> = ({
   transaction,
-  isLoading,
-  deleteTransaction,
-  selectCategory,
-  editCategoryForm,
 }: ITransactionItemProps) => {
+  const {
+    isLoading,
+    handleEditCategoryForm,
+    handleSelectTransaction,
+    handleDeleteTransaction,
+  } = useTransactionContext();
+
   return (
     <tr className="border-b bg-gray-700 border-gray-700 text-gray-300">
       <td className="px-6 py-6 text-center">
@@ -25,10 +25,10 @@ export const TransactionItem: React.FC<ITransactionItemProps> = ({
           value={transaction.id}
           onChange={(e) => {
             if (e.target.checked) {
-              selectCategory(e.target.value);
+              handleSelectTransaction(e.target.value);
               return;
             }
-            selectCategory(e.target.value, true);
+            handleSelectTransaction(e.target.value, true);
           }}
         />
       </td>
@@ -59,7 +59,7 @@ export const TransactionItem: React.FC<ITransactionItemProps> = ({
       <td className="px-6 py-6 text-right">
         <div className="flex gap-2 items-center justify-center">
           <button
-            onClick={() => deleteTransaction(transaction.id)}
+            onClick={() => handleDeleteTransaction(transaction.id)}
             className="border border-gray-600 rounded p-1 w-8 h-8 transition-colors duration-300 hover:border-yellow-500 disabled:brightness-75 disabled:hover:border-gray-600"
             disabled={isLoading}
           >
@@ -68,7 +68,7 @@ export const TransactionItem: React.FC<ITransactionItemProps> = ({
           <button
             className="border border-gray-600 rounded p-1 w-8 h-8 transition-colors duration-300 hover:border-yellow-500 disabled:brightness-75 disabled:hover:border-gray-600"
             disabled={isLoading}
-            onClick={() => editCategoryForm(transaction)}
+            onClick={() => handleEditCategoryForm(transaction)}
           >
             <PencilSimpleLine size={20} />
           </button>

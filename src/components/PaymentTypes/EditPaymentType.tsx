@@ -1,35 +1,30 @@
 import { PlusCircle, XCircle } from "phosphor-react";
 import { ChangeEvent, FormEvent, useState } from "react";
 import { PaymentType } from "../../graphql/generated";
+import { usePaymentTypes } from "../../hooks/usePaymentTypes";
+import { usePaymentTypeContext } from "../../contexts/PaymentContext/usePaymentTypes";
 
 interface IEditPaymentTypeProps {
   paymentType?: PaymentType | undefined;
-  dismissForm: () => void;
-  isLoading: boolean;
-  handleFormSubmit: (
-    e: FormEvent<HTMLFormElement>,
-    id: string,
-    name: string,
-    isActive: boolean
-  ) => void;
 }
+
 export const EditPaymentTypeForm: React.FC<IEditPaymentTypeProps> = ({
   paymentType,
-  dismissForm,
-  handleFormSubmit,
-  isLoading,
 }: IEditPaymentTypeProps) => {
   const [name, setName] = useState<string>(paymentType?.name || "");
   const [isActive, setIsActive] = useState<boolean>(
     paymentType?.isActive || false
   );
 
+  const { isLoading, handleEditFormSubmit, handleDismissEditForm } =
+    usePaymentTypeContext();
+
   return (
     <div className="p-4 rounded-2xl border border-gray-500 mt-4 relative">
       <strong className="text-lg text-orange-300">Editar Categoria</strong>
       <form
         onSubmit={(e: FormEvent<HTMLFormElement>) =>
-          handleFormSubmit(
+          handleEditFormSubmit(
             e,
             paymentType?.id as string,
             name as string,
@@ -71,7 +66,7 @@ export const EditPaymentTypeForm: React.FC<IEditPaymentTypeProps> = ({
         </button>
       </form>
       <button
-        onClick={dismissForm}
+        onClick={() => handleDismissEditForm}
         className="text-gray-600 absolute top-2 right-2 transition-colors duration-300 hover:text-gray-400"
       >
         <XCircle size={24} />

@@ -4,7 +4,7 @@ import { Transaction } from "../../graphql/generated";
 import { useState, useEffect } from "react";
 
 interface ITransactionsHeaderProps {
-  startDate: Date;
+  startDate: Date | undefined;
   transactions: Transaction[];
 }
 
@@ -42,7 +42,7 @@ export const TransactionsHeader: React.FC<ITransactionsHeaderProps> = ({
       <h1 className="flex flex-col justify-end">
         <small className="uppercase text-lg font-bold">Transações</small>
         <strong className="font-black italic text-4xl text-yellow-500">
-          {format(startDate, "MMMM/yyyy", { locale: PtBr })}
+          {format(startDate || new Date(), "MMMM/yyyy", { locale: PtBr })}
         </strong>
       </h1>
       <div className="flex-1 flex justify-end gap-2">

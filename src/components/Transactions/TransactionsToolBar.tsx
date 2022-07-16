@@ -13,45 +13,39 @@ import { useState } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import PtBr from "date-fns/locale/pt-BR";
+import { useTransactionContext } from "../../contexts/TransactionContext/useTransaction";
 
-interface ITransactionsToolBarProps {
-  isActive: boolean;
-  startDate: Date | null;
-  isLoading: boolean;
-  loading: boolean;
-  deleteTransactionsActive: boolean;
-  handleNewTransactionBtn: () => void;
-  handleChangeDatePicker: (date: Date) => void;
-  handleDeleteTransactions: () => void;
-}
-
-export const TransactionsToolBar: React.FC<ITransactionsToolBarProps> = ({
-  isActive,
-  startDate,
-  isLoading,
-  loading,
-  deleteTransactionsActive,
-  handleNewTransactionBtn,
-  handleChangeDatePicker,
-  handleDeleteTransactions,
-}: ITransactionsToolBarProps) => {
+export const TransactionsToolBar: React.FC = () => {
   const [isDatePickerVisible, setIsDatePickerVisible] = useState(false);
+
+  const {
+    isLoading,
+    loading,
+    startDate,
+    isAddFormForm,
+    selectedTransactions,
+    handleChangeDatePicker,
+    handleDeleteTransactions,
+    handleAddNewTrasactionForm,
+  } = useTransactionContext();
 
   return (
     <div className="flex gap-2 justify-between">
       <div className="flex gap-2">
         <button
-          onClick={handleNewTransactionBtn}
+          onClick={handleAddNewTrasactionForm}
           className="flex items-center px-6 gap-1 border border-gray-500 bg-gray-900 text-gray-200 p-2 rounded-2xl transition-colors duration-300	 hover:border-gray-300"
         >
           <FilePlus />
           Nova Transação
-          {isActive ? <CaretDown size={12} /> : <CaretRight size={12} />}
+          {isAddFormForm ? <CaretDown size={12} /> : <CaretRight size={12} />}
         </button>
         <button
           onClick={handleDeleteTransactions}
           className="flex items-center px-6 gap-1 border border-gray-500 bg-gray-900 text-gray-200 p-2 rounded-2xl transition-colors duration-300	 hover:border-gray-300 disabled:brightness-75 disabled:hover:border-gray-500"
-          disabled={!deleteTransactionsActive}
+          disabled={
+            selectedTransactions?.length !== 0 && !isLoading ? true : false
+          }
         >
           <Trash />
           Apagar Selecionados

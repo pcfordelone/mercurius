@@ -1,35 +1,33 @@
 import { PlusCircle, XCircle } from "phosphor-react";
-import { ChangeEvent, FormEvent, useState } from "react";
+import { ChangeEvent, FormEvent, useContext, useState } from "react";
 import { Category } from "../../graphql/generated";
+import { useCategoryContext } from "../../contexts/CategoryContext/useCategory";
 
 interface IEditCategoryProps {
   category?: Category | undefined;
-  dismissForm: () => void;
-  isLoading: boolean;
-  handleFormSubmit: (
-    e: FormEvent<HTMLFormElement>,
-    id: string,
-    name: string,
-    isActive: boolean
-  ) => void;
 }
 export const EditCategoryForm: React.FC<IEditCategoryProps> = ({
   category,
-  dismissForm,
-  handleFormSubmit,
-  isLoading,
 }: IEditCategoryProps) => {
   const [name, setName] = useState<string>(category?.name || "");
   const [isActive, setIsActive] = useState<boolean>(
     category?.isActive || false
   );
 
+  const { handleDismissEditCategoryForm, handleEditFormSubmit, isLoading } =
+    useCategoryContext();
+
   return (
     <div className="p-4 rounded-2xl border border-gray-500 mt-4 relative">
       <strong className="text-lg text-orange-300">Editar Categoria</strong>
       <form
         onSubmit={(e: FormEvent<HTMLFormElement>) =>
-          handleFormSubmit(e, category?.id as string, name as string, isActive)
+          handleEditFormSubmit(
+            e,
+            category?.id as string,
+            name as string,
+            isActive
+          )
         }
         className="flex gap-2 text-sm mb-4 mt-2"
       >
@@ -66,7 +64,7 @@ export const EditCategoryForm: React.FC<IEditCategoryProps> = ({
         </button>
       </form>
       <button
-        onClick={dismissForm}
+        onClick={() => handleDismissEditCategoryForm}
         className="text-gray-600 absolute top-2 right-2 transition-colors duration-300 hover:text-gray-400"
       >
         <XCircle size={24} />

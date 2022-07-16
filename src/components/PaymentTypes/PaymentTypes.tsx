@@ -1,204 +1,26 @@
-import { FormEvent, useState } from "react";
-
 import BackgroundImage from "../../assets/home-background.jpg";
 import LoadingImg from "../../assets/loading.svg";
 import { FilePlus, CaretDown, CaretRight, Trash } from "phosphor-react";
 
-import {
-  PaymentType,
-  useListPaymentTypesActivesQuery,
-  useCreatePaymentTypeMutation,
-  useUpdatePaymentTypeMutation,
-  usePublishPaymentTypeMutation,
-  useDeletePaymentTypeMutation,
-  useDeletePaymentTypesMutation,
-} from "../../graphql/generated";
+import { PaymentType } from "../../graphql/generated";
 
 import { AddNewPaymentType } from "./AddNewPaymentType";
 import { EditPaymentTypeForm } from "./EditPaymentType";
 import { PaymentTypeItem } from "./PaymentTypeItem";
-
-import { slugify } from "../../utils/slugify";
-import { notify } from "../../utils/notify";
-import { scrollToTop } from "../../utils/scrollToTop";
+import { usePaymentTypeContext } from "../../contexts/PaymentContext/usePaymentTypes";
 
 export const PaymentTypes: React.FC = () => {
-  const [isAddFormActive, setIsAddFormActive] = useState(false);
-  const [isEditFormActive, setIsEditFormActive] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
-  const [editPaymentType, setEditPaymentType] = useState<
-    PaymentType | undefined
-  >();
-  const [paymentTypesSelected, setPaymentTypesSelected] = useState<string[]>(
-    []
-  );
-
-  const { data, loading, refetch } = useListPaymentTypesActivesQuery();
-  const [addPaymentType] = useCreatePaymentTypeMutation();
-  const [updatePaymentType] = useUpdatePaymentTypeMutation();
-  const [publishPaymentType] = usePublishPaymentTypeMutation();
-  const [deletePaymentType] = useDeletePaymentTypeMutation();
-  const [deletePaymentTypes] = useDeletePaymentTypesMutation();
-
-  const handleSelectPaymentType = (id: string, unselect?: boolean) => {
-    if (unselect) {
-      setPaymentTypesSelected(
-        paymentTypesSelected.filter((payment_type) => payment_type !== id)
-      );
-      return;
-    }
-    setPaymentTypesSelected([...paymentTypesSelected, id]);
-  };
-
-  const handleDeletePaymentType = (id: string) => {
-    if (window.confirm("Realmente deseja apagar?")) {
-      setIsLoading(true);
-      scrollToTop();
-
-      deletePaymentType({
-        variables: {
-          id: id,
-        },
-      })
-        .then((response) => {
-          notify({
-            message: `Método de pagamento ${response.data?.deletePaymentType?.name} excluído com sucesso`,
-          });
-        })
-        .then(updateCache)
-        .catch((error) => {
-          console.log(error);
-          notify({ message: error.message, type: "error" });
-        });
-    }
-  };
-
-  const handleDeletePaymentTypes = () => {
-    if (
-      window.confirm("Realmente deseja os métodos de pagamento selecionadas?")
-    ) {
-      setIsLoading(true);
-      scrollToTop();
-
-      deletePaymentTypes({
-        variables: {
-          ids: paymentTypesSelected,
-        },
-      })
-        .then(() => {
-          notify({
-            message: `Categorias excluídas com sucesso`,
-          });
-          setPaymentTypesSelected([]);
-        })
-        .then(updateCache)
-        .catch((error) => {
-          console.log(error);
-          notify({ message: error.message, type: "error" });
-        });
-    }
-  };
-
-  const handleAddFormSubmit = (e: FormEvent<HTMLFormElement>, name: string) => {
-    e.preventDefault();
-    setIsLoading(true);
-
-    addPaymentType({
-      variables: {
-        name: name,
-        slug: slugify(name),
-      },
-    })
-      .then((response) => {
-        notify({ message: "Categoria incluída com sucesso", type: "success" });
-        const id = response.data?.createPaymentType?.id;
-        publishPaymentType({
-          variables: {
-            id: id,
-          },
-        })
-          .then(updateCache)
-          .catch((error) => {
-            console.log(error);
-            notify({ message: error.message, type: "error" });
-          });
-      })
-      .catch((error) => {
-        console.log(error);
-        notify({ message: error.message, type: "error" });
-      });
-  };
-
-  const handleEditFormSubmit = (
-    e: FormEvent<HTMLFormElement>,
-    id: string,
-    name: string,
-    isActive: boolean
-  ) => {
-    e.preventDefault();
-    setIsLoading(true);
-
-    updatePaymentType({
-      variables: {
-        id: id,
-        name: name,
-        slug: slugify(name),
-        isActive: isActive || false,
-      },
-    })
-      .then((response) => {
-        notify({
-          message: "Categoria atualizada com sucesso",
-          type: "success",
-        });
-        const id = response.data?.updatePaymentType?.id;
-        publishPaymentType({
-          variables: {
-            id: id,
-          },
-        })
-          .then(updateCache)
-          .then(handleDismissEditPaymentTypeForm)
-          .catch((error) => {
-            console.log(error);
-            notify({ message: error.message, type: "error" });
-          });
-      })
-      .catch((error) => {
-        console.log(error);
-        notify({ message: error.message, type: "error" });
-      });
-  };
-
-  const updateCache = () => {
-    setIsAddFormActive(false);
-
-    refetch()
-      .then(() => {
-        setIsLoading(false);
-      })
-      .catch((error) => {
-        console.log(error);
-        notify({ message: error.message, type: "error" });
-      });
-  };
-
-  const handleToggleForm = () => {
-    setIsAddFormActive(!isAddFormActive);
-  };
-
-  const handleEditPaymentType = async (paymentType: PaymentType) => {
-    await handleDismissEditPaymentTypeForm();
-
-    setEditPaymentType(paymentType);
-    setIsEditFormActive(true);
-    scrollToTop();
-  };
-
-  const handleDismissEditPaymentTypeForm = () => {
-    setEditPaymentType(undefined);
-    setIsEditFormActive(false);
-  };
+  const {
+    isEditFormActive,
+    isLoading,
+    editPaymentType,
+    data,
+    loading,
+    isAddFormActive,
+    paymentTypesSelected,
+    handleDeletePaymentTypes,
+    handleToggleForm,
+  } = usePaymentTypeContext();
 
   return (
     <div
@@ -242,20 +64,10 @@ export const PaymentTypes: React.FC = () => {
             </button>
           </div>
 
-          {isAddFormActive && (
-            <AddNewPaymentType
-              isLoading={isLoading}
-              handleFormSubmit={handleAddFormSubmit}
-            />
-          )}
+          {isAddFormActive && <AddNewPaymentType />}
 
           {isEditFormActive && (
-            <EditPaymentTypeForm
-              isLoading={isLoading}
-              paymentType={editPaymentType}
-              dismissForm={handleDismissEditPaymentTypeForm}
-              handleFormSubmit={handleEditFormSubmit}
-            />
+            <EditPaymentTypeForm paymentType={editPaymentType} />
           )}
 
           <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
@@ -283,11 +95,7 @@ export const PaymentTypes: React.FC = () => {
                 {data?.paymentTypes.map((paymentType) => (
                   <PaymentTypeItem
                     key={paymentType.id}
-                    deletePaymentType={handleDeletePaymentType}
                     paymentType={paymentType as PaymentType}
-                    deleteBtnIsActive={!isLoading}
-                    editPaymentType={handleEditPaymentType}
-                    selectPaymentType={handleSelectPaymentType}
                   />
                 ))}
               </tbody>

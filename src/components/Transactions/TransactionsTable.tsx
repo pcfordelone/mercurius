@@ -1,5 +1,6 @@
 import { TransactionItem } from "./TransactionItem";
 import { Transaction } from "../../graphql/generated";
+import { useTransactionContext } from "../../contexts/TransactionContext/useTransaction";
 
 export interface ITransactionData {
   __typename?: "Transaction" | undefined;
@@ -8,21 +9,10 @@ export interface ITransactionData {
   local: string;
   date: any;
 }
-interface ITransactionsTableProps {
-  transactionsData: Transaction[];
-  isLoading: boolean;
-  deleteTransaction: (id: string) => void;
-  selectCategory: (id: string, unselect?: boolean) => void;
-  editCategoryForm: (transaction: Transaction) => void;
-}
 
-export const TransactionsTable: React.FC<ITransactionsTableProps> = ({
-  transactionsData,
-  deleteTransaction,
-  isLoading,
-  selectCategory,
-  editCategoryForm,
-}: ITransactionsTableProps) => {
+export const TransactionsTable: React.FC = () => {
+  const { data } = useTransactionContext();
+
   return (
     <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
       <table className="w-full text-sm text-left text-gray-400 border-separate border-spacing-y-2">
@@ -55,14 +45,10 @@ export const TransactionsTable: React.FC<ITransactionsTableProps> = ({
           </tr>
         </thead>
         <tbody>
-          {transactionsData?.map((transaction) => (
+          {data?.transactions.map((transaction) => (
             <TransactionItem
               key={transaction.id}
-              transaction={transaction}
-              deleteTransaction={deleteTransaction}
-              isLoading={isLoading}
-              selectCategory={selectCategory}
-              editCategoryForm={editCategoryForm}
+              transaction={transaction as Transaction}
             />
           ))}
         </tbody>
