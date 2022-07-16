@@ -1,7 +1,6 @@
 import { PlusCircle, XCircle } from "phosphor-react";
 import { ChangeEvent, FormEvent, useState } from "react";
 import { PaymentType } from "../../graphql/generated";
-import { usePaymentTypes } from "../../hooks/usePaymentTypes";
 import { usePaymentTypeContext } from "../../contexts/PaymentContext/usePaymentTypes";
 
 interface IEditPaymentTypeProps {

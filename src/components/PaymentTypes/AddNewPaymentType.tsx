@@ -1,6 +1,5 @@
 import { PlusCircle } from "phosphor-react";
 import { ChangeEvent, FormEvent, useState } from "react";
-import { usePaymentTypes } from "../../hooks/usePaymentTypes";
 import { usePaymentTypeContext } from "../../contexts/PaymentContext/usePaymentTypes";
 
 export const AddNewPaymentType: React.FC = () => {

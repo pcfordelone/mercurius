@@ -1,6 +1,5 @@
 import { Trash, PencilSimpleLine } from "phosphor-react";
 import { PaymentType } from "../../graphql/generated";
-import { usePaymentTypes } from "../../hooks/usePaymentTypes";
 import { usePaymentTypeContext } from "../../contexts/PaymentContext/usePaymentTypes";
 
 interface IPaymentTypeItemProps {
