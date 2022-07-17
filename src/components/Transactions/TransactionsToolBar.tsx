@@ -44,7 +44,7 @@ export const TransactionsToolBar: React.FC = () => {
           onClick={handleDeleteTransactions}
           className="flex items-center px-6 gap-1 border border-gray-500 bg-gray-900 text-gray-200 p-2 rounded-2xl transition-colors duration-300	 hover:border-gray-300 disabled:brightness-75 disabled:hover:border-gray-500"
           disabled={
-            selectedTransactions?.length !== 0 && !isLoading ? true : false
+            selectedTransactions?.length !== 0 && !isLoading ? false : true
           }
         >
           <Trash />
