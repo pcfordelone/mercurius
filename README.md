@@ -31,20 +31,24 @@ Esse projeto foi desenvolvido com as seguintes tecnologias:
 - [Auth0](https://auth0.com/)
 
 ## 🤓 Instalação
-Fique a vontade em clonar o projeto, fazer contribuições e até utilizá-lo para aprendizado ou portfolio. 
+
+Fique a vontade em clonar o projeto, fazer contribuições e até utilizá-lo para aprendizado ou portfolio.
 
 ### Pré-requisitos
+
 - criar uma conta Auth0
 - clonar o projeto no GraphCMS
+  (https://app.hygraph.com/clone/05c352105d7d4cd1bb44d70fb6dc8a40?name=Mercurius-Demo)
 
 Clone este repositório em sua máquina, crie as contas acima e proceda conforme a seguir:
 
 1. Rode o comando `yarn` ou `npm install` para instalar as dependências
-2. Crie um arquivo .env na raiz do projeto com os seguintes itens: 
-  - VITE_API_URL= url gerada pelo GraphCMS
-  - VITE_API_ACCESS_TOKEN= Access Token gerado pelo GraphCMS
-  - VITE_AUTH0_DOMAIN= Domínio gerado pelo Auth0
-  - VITE_AUTH0_CLIENT_ID= Cliente ID gerado pelo Auth0
+2. Crie um arquivo .env na raiz do projeto com os seguintes itens:
+
+- VITE_API_URL= url gerada pelo GraphCMS
+- VITE_API_ACCESS_TOKEN= Access Token gerado pelo GraphCMS
+- VITE_AUTH0_DOMAIN= Domínio gerado pelo Auth0
+- VITE_AUTH0_CLIENT_ID= Cliente ID gerado pelo Auth0
 
 3. Após isso basta rodar o comando `yarn dev` ou `npm run dev`
 4. Agora é sua vez, faça melhorias, e caso queira, entre em contato comigo e batemos um papo. 🤟🏻🚀🔥
